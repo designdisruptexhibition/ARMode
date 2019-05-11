@@ -3,13 +3,26 @@
 //		Global Variables
 //////////////////////////////////////////////////////////////////////////////////
 
-	var renderer, render;
+	var renderer, render, scene, camera;
+	var arToolkitContext;
+	var arToolkitSource;
 	var props;
-	var material;
+
+	var material = new THREE.MeshNormalMaterial({transparent: true, opacity: 0.6});
+
+	var jwGroup;
+	var jpGroup;
 
 //////////////////////////////////////////////////////////////////////////////////
 //		Render Setup
 //////////////////////////////////////////////////////////////////////////////////
+function init(){
+
+	// Delay rendering until all files have loaded
+	THREE.DefaultLoadingManager.onLoad = function ( ) {
+		render();
+		console.log("ready to render");
+	};
 
 	// Create a WebGL renderer and add prefernces
 	renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -25,10 +38,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 	// Create a scene
-	var scene	= new THREE.Scene();
+	scene	= new THREE.Scene();
 
 	// Create a camera and add it to the scene
-	var camera = new THREE.Camera();
+	camera = new THREE.Camera();
 	scene.add(camera);
 
 	// Creat a soft white light and add it to the scene
@@ -44,7 +57,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 	// Initialise Webcam
-	var arToolkitSource = new THREEx.ArToolkitSource({
+	arToolkitSource = new THREEx.ArToolkitSource({
 		sourceType : 'webcam',
 	})
 
@@ -70,7 +83,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 	// create atToolkitContext
-	var arToolkitContext = new THREEx.ArToolkitContext({
+	arToolkitContext = new THREEx.ArToolkitContext({
 		cameraParametersUrl: 'data/camera_para.dat',
 		detectionMode: 'mono',
 	})
@@ -85,9 +98,9 @@
 //     Create AR Controls (Markers)
 ////////////////////////////////////////////////////////////////////////////////
 
-	// JW Marker
-		// Create a group for all objects for this particular marker
-		var jwGroup = new THREE.Group
+	//JW Marker
+		//Create a group for all objects for this particular marker
+		jwGroup = new THREE.Group
 		scene.add(jwGroup)
 
 		// Declare which marker is to be detected
@@ -96,14 +109,14 @@
 			patternUrl : 'data/JW.patt',
 		})
 
-	// // JP Marker
-	// 	var jpGroup = new THREE.Group
-	// 	scene.add(jpGroup)
-  //
-	// 	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, jpGroup, {
-	// 		type : 'pattern',
-	// 		patternUrl : 'data/JP.patt',
-	// 	})
+	// JP Marker
+		// jpGroup = new THREE.Group
+		// scene.add(jpGroup)
+    //
+		// var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, jpGroup, {
+		// 	type : 'pattern',
+		// 	patternUrl : 'data/JP.patt',
+		// })
   //
 	// // AY Marker
 	// 	var ayGroup = new THREE.Group
@@ -235,24 +248,23 @@
 //		Create content for markers
 //////////////////////////////////////////////////////////////////////////////////
 
-	// JW Marker Content
+	//JW Marker Content
 	  var groupObjects = new THREE.Object3D();
-
 			var objLoader = new THREE.OBJLoader();
 	      objLoader.load(
 	        'resources/heads/JW.obj',
 	        function (props) {
-	          props.scale.set(0.012,0.012,0.012);
+	          props.scale.set(0.008,0.008,0.008);
 	          props.rotation.y = 3.1;
-						// props.children[0].material = material;
-						// props.children[1].material = material;
-						// props.children[0].material.opacity = 0.7;
+						props.children[0].material = material;
+						props.children[1].material = material;
+						props.children[0].opacity = 1;
 						props.children[0].geometry.center();
-						props.position.set(0,0,-5);
+						props.position.set(0,0,-4);
 	          groupObjects.add(props);
 	        },
 				);
-			var object
+			var object;
 				var materialLoader = new THREE.MTLLoader();
 		    materialLoader.load('resources/content/AR2.mtl', function (material) {
 		      var objLoader = new THREE.OBJLoader()
@@ -260,19 +272,19 @@
 		      objLoader.load(
 		        'resources/content/AR2.obj',
 		        function (object) {
-		          object.scale.set(0.05,0.05,0.05);
+		          object.scale.set(0.02,0.02,0.02);
 		          object.rotation.x = -1.5;
 		          object.position.set(0,0.5,-2.3);
 		          groupObjects.add(object);
 		        }
 		      )
 		    })
+			groupObjects.position.set(0,0,1);
 		// Add to marker group
 		jwGroup.add( groupObjects );
 
-	// //JP Marker Content
+	//JP Marker Content
 	// var groupObjects = new THREE.Object3D();
-  //
 	// 	var objLoader = new THREE.OBJLoader();
 	// 		objLoader.load(
 	// 			'resources/heads/JP.obj',
@@ -285,9 +297,9 @@
 	// 				props.children[0].geometry.center();
 	// 				props.position.set(0,0,-5);
 	// 				groupObjects.add(props);
-	// 			},
+	// 			}
 	// 		);
-	// 	var object
+	// 	var object;
 	// 		var materialLoader = new THREE.MTLLoader();
 	// 		materialLoader.load('resources/content/JP.mtl', function (material) {
 	// 			var objLoader = new THREE.OBJLoader()
@@ -302,6 +314,7 @@
 	// 				}
 	// 			)
 	// 		})
+			// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// jpGroup.add( groupObjects );
   //
@@ -337,6 +350,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// ayGroup.add( groupObjects );
   //
@@ -372,6 +386,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// blGroup.add( groupObjects );
   //
@@ -407,6 +422,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// djGroup.add( groupObjects );
   //
@@ -442,6 +458,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// dzGroup.add( groupObjects );
   //
@@ -477,6 +494,7 @@
 	// 				}
 	// 			)
 	// 		})
+			// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// elGroup.add( groupObjects );
   //
@@ -512,6 +530,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// esGroup.add( groupObjects );
   //
@@ -547,6 +566,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// jhGroup.add( groupObjects );
   //
@@ -582,6 +602,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// kaGroup.add( groupObjects );
   //
@@ -617,6 +638,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// kbGroup.add( groupObjects );
   //
@@ -652,6 +674,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// lzGroup.add( groupObjects );
   //
@@ -687,6 +710,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// nwGroup.add( groupObjects );
   //
@@ -722,6 +746,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// shGroup.add( groupObjects );
   //
@@ -757,6 +782,7 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// skGroup.add( groupObjects );
   //
@@ -792,14 +818,16 @@
 	// 				}
 	// 			)
 	// 		})
+				// groupObjects.position.set(0,0,1);
 	// // Add to marker group
 	// zhGroup.add( groupObjects );
+}
 
 //////////////////////////////////////////////////////////////////////////////////
 //		Render the content (will render content for particular detected marker)
 //////////////////////////////////////////////////////////////////////////////////
 
-  render = function () {
+  function render () {
     requestAnimationFrame( render );
 
     if( arToolkitSource.ready === false )	return
@@ -830,5 +858,5 @@
     renderer.render( scene, camera);
   }
 
-  // Call Render function
-  render();
+// Call init to start
+window.onload = init();
