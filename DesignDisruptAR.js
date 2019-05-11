@@ -250,9 +250,9 @@ function init(){
 
 	//JW Marker Content
 	  var groupObjects = new THREE.Object3D();
-			var objLoader = new THREE.OBJLoader();
+			var objLoader = new THREE.OBMLoader();
 	      objLoader.load(
-	        'resources/heads/JW.obj',
+	        'resources/heads/JW.obm',
 	        function (props) {
 	          props.scale.set(0.008,0.008,0.008);
 	          props.rotation.y = 3.1;
