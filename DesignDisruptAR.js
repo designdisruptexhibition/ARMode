@@ -8,7 +8,7 @@
 	var arToolkitSource;
 	// var props;
 
-	var material = new THREE.MeshNormalMaterial({transparent: true, opacity: 0.6});
+	// var material = new THREE.MeshNormalMaterial({transparent: true, opacity: 0.6});
 
 
 
