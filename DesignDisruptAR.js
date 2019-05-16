@@ -252,10 +252,14 @@
 
 	//JW Marker Content
 	  var groupObjects = new THREE.Object3D();
+<<<<<<< HEAD
 		var objLoader = new THREE.OBMLoader();
 
+=======
+			var objLoader = new THREE.OBJLoader();
+>>>>>>> parent of 89d04a8... Test obm loader
 	      objLoader.load(
-	        'resources/heads/JW.obm',
+	        'resources/heads/JW.obj',
 	        function (props) {
 	          props.scale.set(0.008,0.008,0.008);
 	          props.rotation.y = 3.1;

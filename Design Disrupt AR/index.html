@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Design[Disrupt] AR Mode</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="logoDiv">
+    <img class ="logo" src="resources/GlitchLogo.png" alt="Design [Disrupt] Logo">
+  </div>
+</body>
+
+<!-- ---------------- Custom Shader Code ------------------------ -->
+<!-- <script id="vertexShader" type="x-shader/x-vertex">
+varying vec3 vNormal;
+void main()
+{
+  vNormal = normalize( normalMatrix * normal );
+  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}
+</script> -->
+
+<!-- fragment shader a.k.a. pixel shader -->
+<!-- <script id="fragmentShader" type="x-shader/x-vertex">
+varying vec3 vNormal;
+void main()
+{
+  float intensity = pow( 0.08 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 2.5 );
+  gl_FragColor = vec4(0.99, 0.97, 0.82,1.0) * intensity;
+}
+</script> -->
+<!-- ----------------------------------------------------------- -->
+
+<!-- Three.js library -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/98/three.js"></script> -->
+
+<!-- Three.js library stored with file -->
+<script src="js/three.min.js"></script>
+
+<!-- AR.js library -->
+<script src="js/ar.js"></script>
+
+<!-- Object Loader -->
+<script src="js/OBJLoader.js"></script>
+
+<!-- Material Loader -->
+<script src="js/MTLLoader.js"></script>
+
+<!-- ARDraw.js is the main code containing AR script and content -->
+<script src="DesignDisruptAR.js"></script>
+
+</html>
