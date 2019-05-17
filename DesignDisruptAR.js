@@ -16,18 +16,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 //initialize the  to handle all loaded events (currently just works for OBJ and image files)
 
-THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal) {
-    console.log(itemsloaded);
-		loading = (itemsloaded/45) * 100;
-
-		var loadNum = document.querySelector('#loadNum');
-		loadNum.innerHTML = Math.trunc(loading);
-
-		if (loading == 100){
-			var remLoad = document.querySelector('#loader-wrapper');
-			remLoad.parentNode.removeChild(remLoad);
-		}
-};
+// THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal) {
+//     console.log(itemsloaded);
+// 		loading = (itemsloaded/45) * 100;
+//
+// 		var loadNum = document.querySelector('#loadNum');
+// 		loadNum.innerHTML = Math.trunc(loading);
+//
+// 		if (loading == 100){
+// 			var remLoad = document.querySelector('#loader-wrapper');
+// 			remLoad.parentNode.removeChild(remLoad);
+// 		}
+// };
 
 
 	//Delay rendering until all files have loaded
