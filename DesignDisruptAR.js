@@ -16,18 +16,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 //initialize the  to handle all loaded events (currently just works for OBJ and image files)
 
-THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal) {
-    console.log(itemsloaded);
-		loading = (itemsloaded/45) * 100;
-
-		var loadNum = document.querySelector('#loadNum');
-		loadNum.innerHTML = Math.trunc(loading);
-
-		if (loading == 100){
-			var remLoad = document.querySelector('#loader-wrapper');
-			remLoad.parentNode.removeChild(remLoad);
-		}
-};
+// THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal) {
+//     console.log(itemsloaded);
+// 		loading = (itemsloaded/45) * 100;
+//
+// 		var loadNum = document.querySelector('#loadNum');
+// 		loadNum.innerHTML = Math.trunc(loading);
+//
+// 		if (loading == 100){
+// 			var remLoad = document.querySelector('#loader-wrapper');
+// 			remLoad.parentNode.removeChild(remLoad);
+// 		}
+// };
 
 
 	//Delay rendering until all files have loaded
@@ -110,8 +110,12 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 	//JW Marker
 		//Create a group for all objects for this particular marker
 		var jwGroup;
+		var groupObjectsJW = new THREE.Object3D();
+		var holder = new THREE.Object3D();
 		jwGroup = new THREE.Group
-		scene.add(jwGroup)
+		scene.add(jwGroup);
+		groupObjectsJW.add(holder);
+		jwGroup.add(groupObjectsJW);
 
 		// Declare which marker is to be detected
 		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, jwGroup, {
@@ -119,175 +123,68 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 			patternUrl : 'data/JW.patt',
 		})
 
-	//JP Marker
-		var jpGroup;
-		jpGroup = new THREE.Group
-		scene.add(jpGroup)
+		artoolkitMarker.addEventListener("markerFound", function mark (e){
 
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, jpGroup, {
-			type : 'pattern',
-			patternUrl : 'data/JP.patt',
-		})
-
-	// AY Marker
-		var ayGroup = new THREE.Group
-		scene.add(ayGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, ayGroup, {
-			type : 'pattern',
-			patternUrl : 'data/AY.patt',
-		})
-
-	// BL Marker
-		var blGroup = new THREE.Group
-		scene.add(blGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, blGroup, {
-			type : 'pattern',
-			patternUrl : 'data/BL.patt',
-		})
-
-	// DZ Marker
-		var dzGroup = new THREE.Group
-		scene.add(dzGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, dzGroup, {
-			type : 'pattern',
-			patternUrl : 'data/DZ.patt',
-		})
-
-	// EL Marker
-		var elGroup = new THREE.Group
-		scene.add(elGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, elGroup, {
-			type : 'pattern',
-			patternUrl : 'data/EL.patt',
-		})
-
-	// ES Marker
-		var esGroup = new THREE.Group
-		scene.add(esGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, esGroup, {
-			type : 'pattern',
-			patternUrl : 'data/ES.patt',
-		})
-
-	// JH Marker
-		var jhGroup = new THREE.Group
-		scene.add(jhGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, jhGroup, {
-			type : 'pattern',
-			patternUrl : 'data/JH.patt',
-		})
-
-	// KA Marker
-		var kaGroup = new THREE.Group
-		scene.add(kaGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, kaGroup, {
-			type : 'pattern',
-			patternUrl : 'data/KA.patt',
-		})
-
-	// KB Marker
-		var kbGroup = new THREE.Group
-		scene.add(kbGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, kbGroup, {
-			type : 'pattern',
-			patternUrl : 'data/KB.patt',
-		})
-
-	// LZ Marker
-		var lzGroup = new THREE.Group
-		scene.add(lzGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, lzGroup, {
-			type : 'pattern',
-			patternUrl : 'data/LZ.patt',
-		})
-
-	// NW Marker
-		var nwGroup = new THREE.Group
-		scene.add(nwGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, nwGroup, {
-			type : 'pattern',
-			patternUrl : 'data/NW.patt',
-		})
-
-	// SH Marker
-		var shGroup = new THREE.Group
-		scene.add(shGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, shGroup, {
-			type : 'pattern',
-			patternUrl : 'data/SH.patt',
-		})
-
-	// SK Marker
-		var skGroup = new THREE.Group
-		scene.add(skGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, skGroup, {
-			type : 'pattern',
-			patternUrl : 'data/SK.patt',
-		})
-
-	// ZH Marker
-		var zhGroup = new THREE.Group
-		scene.add(zhGroup)
-
-		var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, zhGroup, {
-			type : 'pattern',
-			patternUrl : 'data/ZH.patt',
-		})
-
-//////////////////////////////////////////////////////////////////////////////////
-//		Create content for markers
-//////////////////////////////////////////////////////////////////////////////////
-
-	//JW Marker Content
-	var groupObjectsJW = new THREE.Object3D();
-	var objLoader = new THREE.OBMLoader();
-	objLoader.load(
-		'resources/heads/JW.obm',
-		function (props) {
-			props.scale.set(0.008,0.008,0.008);
-			props.rotation.y = 3.1;
-			props.children[0].material = material;
-			props.children[1].material = material;
-			props.children[0].opacity = 1;
-			props.children[0].geometry.center();
-			props.children[1].geometry.center();
-			props.position.set(0,0,-5.3);
-			groupObjectsJW.add(props);
-		},
-	);
-	var object;
-	var materialLoader = new THREE.MTLLoader();
-	materialLoader.load('resources/content/JW.mtl', function (material) {
-		var objLoader = new THREE.OBJLoader();
-		objLoader.setMaterials(material)
+		//JW Marker Content
+		var objLoader = new THREE.OBMLoader();
 		objLoader.load(
-			'resources/content/JW.obj',
-			function (object) {
-				object.scale.set(0.2,0.2,0.2);
-				object.rotation.x = -1.5;
-				object.position.set(0,0,-2.3);
-				groupObjectsJW.add(object);
-			}
-		)
-	})
-	groupObjectsJW.position.set(0,0,2.3);
-	// Add to marker group
-	jwGroup.add( groupObjectsJW );
+			'resources/heads/JW.obm',
+			function (props) {
+				props.scale.set(0.008,0.008,0.008);
+				props.rotation.y = 3.1;
+				props.children[0].material = material;
+				props.children[1].material = material;
+				props.children[0].opacity = 1;
+				props.children[0].geometry.center();
+				props.children[1].geometry.center();
+				props.position.set(0,0,-5.3);
+				groupObjectsJW.add(props);
+			},
+		);
+		var object;
+		var materialLoader = new THREE.MTLLoader();
+		materialLoader.load('resources/content/JW.mtl', function (material) {
+			var objLoader = new THREE.OBJLoader();
+			objLoader.setMaterials(material)
+			objLoader.load(
+				'resources/content/JW.obj',
+				function (object) {
+					object.scale.set(0.2,0.2,0.2);
+					object.rotation.x = -1.5;
+					object.position.set(0,0,-2.3);
+					groupObjectsJW.add(object);
+				}
+			)
+		})
+		groupObjectsJW.position.set(0,0,2.3);
 
-	//JP Marker Content
+		groupObjectsJW.remove(holder);
+
+		groupObjectsJW.matrixAutoUpdate  = true;
+		groupObjectsJW.updateMatrix();
+
+		this.removeEventListener("markerFound", mark);
+
+	});
+
+	//JP Marker
+	var jpGroup;
 	var groupObjectsJP = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	jpGroup = new THREE.Group
+	scene.add(jpGroup);
+	groupObjectsJP.add(holder);
+	jpGroup.add(groupObjectsJP);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, jpGroup, {
+		type : 'pattern',
+		patternUrl : 'data/JP.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
+
+	//jp Marker Content
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/JP.obm',
@@ -301,12 +198,12 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 			props.children[1].geometry.center();
 			props.position.set(0,0,-5.3);
 			groupObjectsJP.add(props);
-		}
+		},
 	);
 	var object;
 	var materialLoader = new THREE.MTLLoader();
 	materialLoader.load('resources/content/JP.mtl', function (material) {
-		var objLoader = new THREE.OBJLoader()
+		var objLoader = new THREE.OBJLoader();
 		objLoader.setMaterials(material)
 		objLoader.load(
 			'resources/content/JP.obj',
@@ -319,11 +216,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsJP.position.set(0,0,2.3);
-	// Add to marker group
-	jpGroup.add( groupObjectsJP );
 
-	// //AY Marker Content
+	groupObjectsJP.remove(holder);
+
+	groupObjectsJP.matrixAutoUpdate  = true;
+	groupObjectsJP.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// AY Marker
+	//Create a group for all objects for this particular marker
+	var ayGroup;
 	var groupObjectsAY = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	ayGroup = new THREE.Group
+	scene.add(ayGroup);
+	groupObjectsAY.add(holder);
+	ayGroup.add(groupObjectsAY);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, ayGroup, {
+		type : 'pattern',
+		patternUrl : 'data/AY.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
+
+	//AY Marker Content
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/AY.obm',
@@ -353,11 +274,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsAY.position.set(0,0,2.3);
-	// Add to marker group
-	ayGroup.add( groupObjectsAY );
+
+	groupObjectsAY.remove(holder);
+
+	groupObjectsAY.matrixAutoUpdate  = true;
+	groupObjectsAY.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// BL Marker
+	//Create a group for all objects for this particular marker
+	var blGroup;
+	var groupObjectsBL = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	blGroup = new THREE.Group
+	scene.add(blGroup);
+	groupObjectsBL.add(holder);
+	blGroup.add(groupObjectsBL);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, blGroup, {
+		type : 'pattern',
+		patternUrl : 'data/BL.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//BL Marker Content
-	var groupObjectsBL = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/BL.obm',
@@ -389,11 +334,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsBL.position.set(0,0,2.3);
-	// Add to marker group
-	blGroup.add( groupObjectsBL );
+
+	groupObjectsBL.remove(holder);
+
+	groupObjectsBL.matrixAutoUpdate  = true;
+	groupObjectsBL.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// DZ Marker
+	//Create a group for all objects for this particular marker
+	var dzGroup;
+	var groupObjectsDZ = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	dzGroup = new THREE.Group
+	scene.add(dzGroup);
+	groupObjectsDZ.add(holder);
+	dzGroup.add(groupObjectsDZ);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, dzGroup, {
+		type : 'pattern',
+		patternUrl : 'data/DZ.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//DZ Marker Content
-	var groupObjectsDZ = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/DZ.obm',
@@ -425,11 +394,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsDZ.position.set(0,0,2.3);
-	// Add to marker group
-	dzGroup.add( groupObjectsDZ );
+
+	groupObjectsDZ.remove(holder);
+
+	groupObjectsDZ.matrixAutoUpdate  = true;
+	groupObjectsDZ.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// EL Marker
+	//Create a group for all objects for this particular marker
+	var elGroup;
+	var groupObjectsEL = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	elGroup = new THREE.Group
+	scene.add(elGroup);
+	groupObjectsEL.add(holder);
+	elGroup.add(groupObjectsEL);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, elGroup, {
+		type : 'pattern',
+		patternUrl : 'data/EL.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//EL Marker Content
-	var groupObjectsEL = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/EL.obm',
@@ -461,11 +454,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsEL.position.set(0,0,2.3);
-	// Add to marker group
-	elGroup.add( groupObjectsEL );
+
+	groupObjectsEL.remove(holder);
+
+	groupObjectsEL.matrixAutoUpdate  = true;
+	groupObjectsEL.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// ES Marker
+	//Create a group for all objects for this particular marker
+	var esGroup;
+	var groupObjectsES = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	esGroup = new THREE.Group
+	scene.add(esGroup);
+	groupObjectsES.add(holder);
+	esGroup.add(groupObjectsES);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, esGroup, {
+		type : 'pattern',
+		patternUrl : 'data/ES.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//ES Marker Content
-	var groupObjectsES = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/ES.obm',
@@ -497,11 +514,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsES.position.set(0,0,2.3);
-	// Add to marker group
-	esGroup.add( groupObjectsES );
+
+	groupObjectsES.remove(holder);
+
+	groupObjectsES.matrixAutoUpdate  = true;
+	groupObjectsES.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// JH Marker
+	//Create a group for all objects for this particular marker
+	var jhGroup;
+	var groupObjectsJH = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	jhGroup = new THREE.Group
+	scene.add(jhGroup);
+	groupObjectsJH.add(holder);
+	jhGroup.add(groupObjectsJH);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, jhGroup, {
+		type : 'pattern',
+		patternUrl : 'data/JH.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//JH Marker Content
-	var groupObjectsJH = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/JH.obm',
@@ -533,11 +574,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsJH.position.set(0,0,2.3);
-	// Add to marker group
-	jhGroup.add( groupObjectsJH );
+
+	groupObjectsJH.remove(holder);
+
+	groupObjectsJH.matrixAutoUpdate  = true;
+	groupObjectsJH.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// KA Marker
+	//Create a group for all objects for this particular marker
+	var kaGroup;
+	var groupObjectsKA = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	kaGroup = new THREE.Group
+	scene.add(kaGroup);
+	groupObjectsKA.add(holder);
+	kaGroup.add(groupObjectsKA);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, kaGroup, {
+		type : 'pattern',
+		patternUrl : 'data/KA.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//KA Marker Content
-	var groupObjectsKA = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/KA.obm',
@@ -569,11 +634,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsKA.position.set(0,0,2.3);
-	// Add to marker group
-	kaGroup.add( groupObjectsKA );
+
+	groupObjectsKA.remove(holder);
+
+	groupObjectsKA.matrixAutoUpdate  = true;
+	groupObjectsKA.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// KB Marker
+	//Create a group for all objects for this particular marker
+	var kbGroup;
+	var groupObjectsKB = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	kbGroup = new THREE.Group
+	scene.add(kbGroup);
+	groupObjectsKB.add(holder);
+	kbGroup.add(groupObjectsKB);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, kbGroup, {
+		type : 'pattern',
+		patternUrl : 'data/KB.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//KB Marker Content
-	var groupObjectsKB = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/KB.obm',
@@ -581,8 +670,10 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 			props.scale.set(0.008,0.008,0.008);
 			props.rotation.y = 3.1;
 			props.children[0].material = material;
+			props.children[1].material = material;
 			props.children[0].opacity = 1;
 			props.children[0].geometry.center();
+			props.children[1].geometry.center();
 			props.position.set(0,0,-5.3);
 			groupObjectsKB.add(props);
 		},
@@ -603,11 +694,35 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsKB.position.set(0,0,2.3);
-	// Add to marker group
-	kbGroup.add( groupObjectsKB );
+
+	groupObjectsKB.remove(holder);
+
+	groupObjectsKB.matrixAutoUpdate  = true;
+	groupObjectsKB.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// LZ Marker
+	//Create a group for all objects for this particular marker
+	var lzGroup;
+	var groupObjectsLZ = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	lzGroup = new THREE.Group
+	scene.add(lzGroup);
+	groupObjectsLZ.add(holder);
+	lzGroup.add(groupObjectsLZ);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, lzGroup, {
+		type : 'pattern',
+		patternUrl : 'data/LZ.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//LZ Marker Content
-	var groupObjectsLZ = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/LZ.obm',
@@ -639,11 +754,37 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsLZ.position.set(0,0,2.3);
-	// Add to marker group
-	lzGroup.add( groupObjectsLZ );
+
+	groupObjectsLZ.remove(holder);
+
+	groupObjectsLZ.matrixAutoUpdate  = true;
+	groupObjectsLZ.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// NW Marker
+	//Create a group for all objects for this particular marker
+	var nwGroup;
+	var groupObjectsNW = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	nwGroup = new THREE.Group
+	scene.add(nwGroup);
+	groupObjectsNW.add(holder);
+	nwGroup.add(groupObjectsNW);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, nwGroup, {
+		type : 'pattern',
+		patternUrl : 'data/NW.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
+
+		groupObjectsNW.remove(holder);
 
 	//NW Marker Content
-	var groupObjectsNW = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/NW.obm',
@@ -675,11 +816,33 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsNW.position.set(0,0,2.3);
-	// Add to marker group
-	nwGroup.add( groupObjectsNW );
+
+	groupObjectsSH.matrixAutoUpdate  = true;
+	groupObjectsSH.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// SH Marker
+	//Create a group for all objects for this particular marker
+	var shGroup;
+	var groupObjectsSH = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	shGroup = new THREE.Group
+	scene.add(shGroup);
+	groupObjectsSH.add(holder);
+	shGroup.add(groupObjectsSH);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, shGroup, {
+		type : 'pattern',
+		patternUrl : 'data/SH.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//SH Marker Content
-	var groupObjectsSH = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/SH.obm',
@@ -711,11 +874,38 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsSH.position.set(0,0,2.3);
-	// Add to marker group
-	shGroup.add( groupObjectsSH );
+
+	groupObjectsSH.remove(holder);
+
+	groupObjectsSH.matrixAutoUpdate  = true;
+	groupObjectsSH.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// SK Marker
+	//Create a group for all objects for this particular marker
+	var skGroup;
+	var groupObjectsSK = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	skGroup = new THREE.Group
+	scene.add(skGroup);
+	groupObjectsSK.add(holder);
+	skGroup.add(groupObjectsSK);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, skGroup, {
+		type : 'pattern',
+		patternUrl : 'data/SK.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
+
+		groupObjectsSK.matrixAutoUpdate  = true;
+		groupObjectsSK.updateMatrix();
 
 	//SK Marker Content
-	var groupObjectsSK = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/SK.obm',
@@ -747,11 +937,37 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsSK.position.set(0,0,2.3);
-	// Add to marker group
-	skGroup.add( groupObjectsSK );
+
+	groupObjectsSK.remove(holder);
+
+	groupObjectsSK.matrixAutoUpdate  = true;
+	groupObjectsSK.updateMatrix();
+
+	groupObjectsSK.children[0].rotationneedsUpdate = true;
+
+	this.removeEventListener("markerFound", mark);
+
+});
+
+	// ZH Marker
+	//Create a group for all objects for this particular marker
+	var zhGroup;
+	var groupObjectsZH = new THREE.Object3D();
+	var holder = new THREE.Object3D();
+	zhGroup = new THREE.Group
+	scene.add(zhGroup);
+	groupObjectsZH.add(holder);
+	zhGroup.add(groupObjectsZH);
+
+	// Declare which marker is to be detected
+	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, zhGroup, {
+		type : 'pattern',
+		patternUrl : 'data/ZH.patt',
+	})
+
+	artoolkitMarker.addEventListener("markerFound", function mark (e){
 
 	//ZH Marker Content
-	var groupObjectsZH = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	objLoader.load(
 		'resources/heads/ZH.obm',
@@ -783,8 +999,15 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 		)
 	})
 	groupObjectsZH.position.set(0,0,2.3);
-	// Add to marker group
-	zhGroup.add( groupObjectsZH );
+
+	groupObjectsZH.remove(holder);
+
+	groupObjectsZH.matrixAutoUpdate  = true;
+	groupObjectsZH.updateMatrix();
+
+	this.removeEventListener("markerFound", mark);
+
+});
 
 //////////////////////////////////////////////////////////////////////////////////
 //		Render the content (will render content for particular detected marker)
@@ -798,6 +1021,9 @@ THREE.DefaultLoadingManager.onProgress = function (url, itemsloaded, itemsTotal)
 
 		// Update scene.visible if the marker is seen
 		scene.visible = camera.visible
+
+		jwGroup.children[0].matrixAutoUpdate  = true;
+		jwGroup.children[0].updateMatrix();
 
 		// Spinning head animation
 		jwGroup.children[0].children[0].rotation.z -= 0.02;
