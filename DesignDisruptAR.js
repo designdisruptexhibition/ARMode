@@ -6,9 +6,8 @@
 	var renderer, render, scene, camera;
 	var arToolkitContext;
 	var arToolkitSource;
-	// var props;
-
-	// var material = new THREE.MeshNormalMaterial({transparent: true, opacity: 0.6});
+	var props;
+	var material = new THREE.MeshNormalMaterial({transparent: true, opacity: 0.6});
 
 
 
@@ -251,15 +250,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 	//JW Marker Content
-	  var groupObjects = new THREE.Object3D();
-<<<<<<< HEAD
+	  var groupObjectsJW = new THREE.Object3D();
 		var objLoader = new THREE.OBMLoader();
-
-=======
-			var objLoader = new THREE.OBJLoader();
->>>>>>> parent of 89d04a8... Test obm loader
 	      objLoader.load(
-	        'resources/heads/JW.obj',
+	        'resources/heads/JW.obm',
 	        function (props) {
 	          props.scale.set(0.008,0.008,0.008);
 	          props.rotation.y = 3.1;
@@ -268,32 +262,31 @@
 						props.children[0].opacity = 1;
 						props.children[0].geometry.center();
 						props.children[1].geometry.center();
-						props.position.set(0,0,-4);
-	          groupObjects.add(props);
+						props.position.set(0,0,-5.3);
+	          groupObjectsJW.add(props);
 	        },
 				);
 			var object;
-			var material = new THREE.MeshNormalMaterial({transparent: true, opacity: 0.6});
 				var materialLoader = new THREE.MTLLoader();
-		    materialLoader.load('resources/content/AR2.mtl', function (material) {
+		    materialLoader.load('resources/content/JW.mtl', function (material) {
 		      var objLoader = new THREE.OBJLoader();
 		      objLoader.setMaterials(material)
 		      objLoader.load(
-		        'resources/content/AR2.obj',
+		        'resources/content/JW.obj',
 		        function (object) {
 		          object.scale.set(0.2,0.2,0.2);
 		          object.rotation.x = -1.5;
-		          object.position.set(0,0.5,-2.3);
-		          groupObjects.add(object);
+		          object.position.set(0,0,-2.3);
+		          groupObjectsJW.add(object);
 		        }
 		      )
 		    })
-			groupObjects.position.set(0,0,1);
+			groupObjectsJW.position.set(0,0,2.3);
 		// Add to marker group
-		jwGroup.add( groupObjects );
+		jwGroup.add( groupObjectsJW );
 
 	//JP Marker Content
-	var groupObjects = new THREE.Object3D();
+	var groupObjectsJP = new THREE.Object3D();
 	var objLoader = new THREE.OBMLoader();
 	var props;
 			objLoader.load(
@@ -306,11 +299,10 @@
 					props.children[0].material.opacity = 0.7;
 					props.children[0].geometry.center();
 					props.position.set(0,0,-5);
-					groupObjects.add(props);
+					groupObjectsJP.add(props);
 				}
 			);
 		var object;
-		var material = new THREE.MeshNormalMaterial({transparent: true, opacity: 0.6});
 			var materialLoader = new THREE.MTLLoader();
 			materialLoader.load('resources/content/JP.mtl', function (material) {
 				var objLoader = new THREE.OBJLoader()
@@ -321,13 +313,13 @@
 						object.scale.set(0.5,0.5,0.5);
 						object.rotation.x = -1.5;
 						object.position.set(0,0.5,-2.3);
-						groupObjects.add(object);
+						groupObjectsJP.add(object);
 					}
 				)
 			})
-			groupObjects.position.set(0,0,1);
+			groupObjectsJP.position.set(0,0,0);
 	// Add to marker group
-	jpGroup.add( groupObjects );
+	jpGroup.add( groupObjectsJP );
 
 	// //AY Marker Content
 	// var groupObjects = new THREE.Object3D();
@@ -848,8 +840,8 @@
 		scene.visible = camera.visible
 
 		// Spinning head animation
-		// jwGroup.children[0].children[0].rotation.z -= 0.02;
-		// jpGroup.children[0].children[0].rotation.z -= 0.02;
+		jwGroup.children[0].children[0].rotation.z -= 0.02;
+		jpGroup.children[0].children[0].rotation.z -= 0.02;
 		// ayGroup.children[0].children[0].rotation.z -= 0.02;
 		// blGroup.children[0].children[0].rotation.z -= 0.02;
 		// djGroup.children[0].children[0].rotation.z -= 0.02;
